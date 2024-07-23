@@ -6,10 +6,6 @@ import java.util.concurrent.*;
 
 public class Main {
   public static void main(String[] args) {
-    // You can use print statements as follows for debugging, they'll be visible when running tests.
-    System.out.println("Logs from your program will appear here!");
-    Map<String, String> store = new ConcurrentHashMap<String, String>();
-
     Socket clientSocket = null;
     int port = 6379;
     try (ServerSocket serverSocket = new ServerSocket(port)) {
