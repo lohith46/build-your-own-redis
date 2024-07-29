@@ -1,7 +1,7 @@
 package commands;
 
+import formatters.*;
 import parser.*;
-import response.*;
 
 import java.io.*;
 import java.util.*;
@@ -9,7 +9,7 @@ import java.util.*;
 public class StringLength extends Command<BufferedReader, PrintWriter, String> {
 
   public static final Integer DEFAULT_RESPONSE = 0;
-  private final RespCommand<Integer> respCommand = new RespCommand<>();
+  ValueFormatterContext context = new ValueFormatterContext();
   private final InputReader inputReader = new InputReader();
 
   public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output) throws IOException {
@@ -25,7 +25,7 @@ public class StringLength extends Command<BufferedReader, PrintWriter, String> {
 
   @Override
   void printOutput(PrintWriter output, String value) {
-    String response = respCommand.respCommand(Objects.nonNull(value) ? value.length() : DEFAULT_RESPONSE );
+    String response = context.formatValue(Objects.nonNull(value) ? value.length() : DEFAULT_RESPONSE);
     output.print(response);
     output.flush();
   }

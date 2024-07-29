@@ -5,9 +5,10 @@ import parser.*;
 import java.io.*;
 import java.util.*;
 
+import static utils.Constants.*;
+
 public class Set extends Command<BufferedReader, PrintWriter, String> {
 
-  private static final String OK_RESPONSE = "+OK\r\n";
   private final InputReader inputReader = new InputReader();
 
   public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output) throws IOException {

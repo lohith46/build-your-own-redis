@@ -2,9 +2,9 @@ package commands;
 
 import java.io.*;
 
-public class Ping extends Command<BufferedReader, PrintWriter, String> {
+import static utils.Constants.*;
 
-  public static final String DEFAULT_RESPONSE = "+PONG\r\n";
+public class Ping extends Command<BufferedReader, PrintWriter, String> {
 
   public void execute(PrintWriter output) {
     printOutput(output, DEFAULT_RESPONSE);

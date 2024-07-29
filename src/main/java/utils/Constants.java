@@ -12,4 +12,6 @@ public class Constants {
   public static final String MGET_COMMAND = "MGET";
   public static final String STRING_LENGTH_COMMAND = "STRLEN";
   public static final String NULL_STRING = "-1";
+  public static final String OK_RESPONSE = "+OK\r\n";
+  public static final String DEFAULT_RESPONSE = "+PONG\r\n";
 }

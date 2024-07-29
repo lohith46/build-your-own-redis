@@ -1,7 +1,7 @@
 package commands;
 
+import formatters.*;
 import parser.*;
-import response.*;
 
 import java.io.*;
 import java.util.*;
@@ -9,7 +9,7 @@ import java.util.*;
 public class Get extends Command<BufferedReader, PrintWriter, String> {
 
   private final InputReader inputReader = new InputReader();
-  private final RespCommand<String> respCommand = new RespCommand<>();
+  private final ValueFormatterContext context = new ValueFormatterContext();
 
   public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output) throws IOException {
     String key = readInput(bufferedReader);
@@ -24,7 +24,7 @@ public class Get extends Command<BufferedReader, PrintWriter, String> {
 
   @Override
   void printOutput(PrintWriter output, String value) {
-    String response = respCommand.respCommand(Objects.nonNull(value) ? value : null );
+    String response = context.formatValue(Objects.nonNull(value) ? value : null );
     output.print(response);
     output.flush();
   }

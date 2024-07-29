@@ -1,17 +1,17 @@
 package commands;
 
+import formatters.*;
 import parser.*;
-import response.*;
 
 import java.io.*;
 import java.util.*;
 
-import static utils.Constants.NULL_STRING;
+import static utils.Constants.*;
 
 public class MGet extends Command<BufferedReader, PrintWriter, List<String>> {
 
   private final InputReader inputReader = new InputReader();
-  private final RespCommand<List<String>> respCommand = new RespCommand<>();
+  private final ValueFormatterContext context = new ValueFormatterContext();
   int iterateBufferReaderCount = 0;
 
   public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int iterateTill) throws IOException {
@@ -41,7 +41,7 @@ public class MGet extends Command<BufferedReader, PrintWriter, List<String>> {
 
   @Override
   void printOutput(PrintWriter output, List<String> values) {
-    String response = respCommand.respCommand(values);
+    String response = context.formatValue(values);
     output.print(response);
     output.flush();
   }
