@@ -5,11 +5,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import static utils.Constants.*;
+
 class ClientHandler extends Thread {
-  private static final String PING_COMMAND = "PING";
-  private static final String SET_COMMAND = "SET";
-  private static final String GET_COMMAND = "GET";
-  private static final String STRING_LENGTH_COMMAND = "STRLEN";
   private final Socket socket;
   private static Map<String, String> store = new HashMap<>();
 
@@ -30,8 +28,12 @@ class ClientHandler extends Thread {
 
   private static void handleClient(BufferedReader bufferedReader, PrintWriter output) throws IOException {
     String content;
-    while ((content = bufferedReader.readLine()) != null) {
+    int numberOfCommands = 0;
+    int count = 0;
+    while ((content = bufferedReader.readLine()) != null && count <= numberOfCommands) {
+      count++;
       System.out.println("Command: " +content);
+      numberOfCommands = fetchNumberOfCommands(content, numberOfCommands);
       switch (content.toUpperCase()) {
         case PING_COMMAND: //*1$4PING
           new Ping().execute(output);
@@ -45,7 +47,18 @@ class ClientHandler extends Thread {
         case STRING_LENGTH_COMMAND: //*2$6STRLEN
           new StringLength().execute(store, bufferedReader, output);
           break;
+        case MGET_COMMAND: //*2$6STRLEN
+          new MGet().execute(store, bufferedReader, output, numberOfCommands-1);
+          //output.print("*2\r\n$5\r\nhello\r\n$5\r\nworld\r\n");
+          break;
       }
     }
+  }
+
+  private static int fetchNumberOfCommands(String content, int numberOfCommands) {
+    if (content.startsWith(ARRAY)) {
+      numberOfCommands = Integer.parseInt(content.substring(1,2));
+    }
+    return numberOfCommands;
   }
 }

@@ -1,20 +1,11 @@
 package response;
 
-import static utils.Constants.*;
+import formatters.*;
 
 public class RespCommand<T> {
+  ValueFormatterContext context = new ValueFormatterContext();
 
   public String respCommand(T value) {
-    if (value instanceof Integer) {
-      return SIMPLE_INTEGER + value + CRLF;
-    }
-    if (value instanceof String) {
-      if(!((String) value).isEmpty()){
-        return SIMPLE_STRING + value + CRLF;
-      }else {
-        return BULK_STRINGS + -1 + CRLF;
-      }
-    }
-    return BULK_STRINGS + -1 + CRLF;
+    return context.formatValue(value);
   }
 }
