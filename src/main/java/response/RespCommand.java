@@ -1,20 +1,20 @@
 package response;
 
-import java.util.*;
+import static utils.Constants.*;
 
 public class RespCommand<T> {
 
   public String respCommand(T value) {
     if (value instanceof Integer) {
-      return ":" + value + "\r\n";
+      return SIMPLE_INTEGER + value + CRLF;
     }
     if (value instanceof String) {
       if(!((String) value).isEmpty()){
-        return "+" + value + "\r\n";
+        return SIMPLE_STRING + value + CRLF;
       }else {
-        return "$" + -1 + "\r\n";
+        return BULK_STRINGS + -1 + CRLF;
       }
     }
-    return "$" + -1 + "\r\n";
+    return BULK_STRINGS + -1 + CRLF;
   }
 }

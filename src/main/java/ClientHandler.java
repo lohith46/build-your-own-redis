@@ -1,5 +1,5 @@
-import commands.*;
 import commands.Set;
+import commands.*;
 
 import java.io.*;
 import java.net.*;
@@ -34,7 +34,7 @@ class ClientHandler extends Thread {
       System.out.println("Command: " +content);
       switch (content.toUpperCase()) {
         case PING_COMMAND: //*1$4PING
-          handlePingCommand(output);
+          new Ping().execute(output);
           break;
         case SET_COMMAND: //*3$3SET
           new Set().execute(store, bufferedReader, output);
