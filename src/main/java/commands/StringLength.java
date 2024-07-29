@@ -6,7 +6,7 @@ import response.*;
 import java.io.*;
 import java.util.*;
 
-public class StringLength extends Command<BufferedReader, PrintWriter> {
+public class StringLength extends Command<BufferedReader, PrintWriter, String> {
 
   public static final Integer DEFAULT_RESPONSE = 0;
   private final RespCommand<Integer> respCommand = new RespCommand<>();

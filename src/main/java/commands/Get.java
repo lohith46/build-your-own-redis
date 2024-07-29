@@ -6,7 +6,7 @@ import response.*;
 import java.io.*;
 import java.util.*;
 
-public class Get extends Command<BufferedReader, PrintWriter> {
+public class Get extends Command<BufferedReader, PrintWriter, String> {
 
   private final InputReader inputReader = new InputReader();
   private final RespCommand<String> respCommand = new RespCommand<>();

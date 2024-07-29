@@ -5,7 +5,7 @@ import parser.*;
 import java.io.*;
 import java.util.*;
 
-public class Set extends Command<BufferedReader, PrintWriter> {
+public class Set extends Command<BufferedReader, PrintWriter, String> {
 
   private static final String OK_RESPONSE = "+OK\r\n";
   private final InputReader inputReader = new InputReader();
