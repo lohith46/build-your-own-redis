@@ -48,9 +48,4 @@ class ClientHandler extends Thread {
       }
     }
   }
-
-  private static void handlePingCommand(PrintWriter output) {
-    output.print("+PONG\r\n");
-    output.flush();
-  }
 }
