@@ -35,21 +35,23 @@ class ClientHandler extends Thread {
       System.out.println("Command: " +content);
       numberOfCommands = fetchNumberOfCommands(content, numberOfCommands);
       switch (content.toUpperCase()) {
-        case PING_COMMAND: //*1$4PING
+        case PING_COMMAND:
           new Ping().execute(output);
           break;
-        case SET_COMMAND: //*3$3SET
+        case SET_COMMAND:
           new Set().execute(store, bufferedReader, output);
           break;
-        case GET_COMMAND: //*2$3GET
+        case GET_COMMAND:
           new Get().execute(store, bufferedReader, output);
           break;
-        case STRING_LENGTH_COMMAND: //*2$6STRLEN
+        case STRING_LENGTH_COMMAND:
           new StringLength().execute(store, bufferedReader, output);
           break;
-        case MGET_COMMAND: //*2$6STRLEN
+        case MGET_COMMAND:
           new MGet(numberOfCommands-1).execute(store, bufferedReader, output);
-          //output.print("*2\r\n$5\r\nhello\r\n$5\r\nworld\r\n");
+          break;
+        case DEL_COMMAND:
+          new Delete(numberOfCommands-1).execute(store, bufferedReader, output);
           break;
       }
     }
