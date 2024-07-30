@@ -5,6 +5,7 @@ import parser.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public class Delete extends Command<BufferedReader, PrintWriter, List<String>, Integer> {
 
@@ -24,7 +25,16 @@ public class Delete extends Command<BufferedReader, PrintWriter, List<String>, I
   }
 
   private int removeKeys(Map<String, String> store, List<String> keys) {
-    return 0;
+    AtomicInteger count = new AtomicInteger(0);
+    keys.removeIf(key -> {
+      if (store.containsKey(key)) {
+        count.incrementAndGet();
+        store.remove(key);
+        return true;
+      }
+      return false;
+    });
+    return count.get();
   }
 
   @Override

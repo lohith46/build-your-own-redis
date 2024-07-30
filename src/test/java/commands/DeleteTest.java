@@ -21,6 +21,7 @@ class DeleteTest {
   @BeforeEach
   void setUp() {
     delete = new Delete(1);
+    store = new HashMap<>(Map.of("key1", "value1", "key2", "value2", "key3", "value3"));
   }
 
   @ParameterizedTest
@@ -57,18 +58,31 @@ class DeleteTest {
     assertEquals(expectedOutput, stringWriter.toString());
   }
 
-  @Test
-  void shouldBeAbleToExecuteTheDeleteByRemovingKeysFromStore() throws IOException {
-    delete  = new Delete(2);
+  @ParameterizedTest
+  @MethodSource(value = "testDataForExecuteMethod")
+  void shouldBeAbleToExecuteTheDeleteByRemovingKeysFromStore(String inputBufferStr, String expectedOutput,
+                                                             List<String> removedKeys, int noOfKeys) throws IOException {
+    delete  = new Delete(noOfKeys);
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
-    String key = "";
 
-    delete.execute(store, new BufferedReader(new StringReader("$4\r\nkey1\r\n")), printWriter);
+    delete.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter);
+    printWriter.flush();
 
-    assertFalse(store.containsKey(key));
+    Map<String, String> updatedStore = store;
+    removedKeys.forEach(key -> assertFalse(updatedStore.containsKey(key)));
+    assertEquals(expectedOutput, stringWriter.toString());
+
   }
 
+  public static Stream<Arguments> testDataForExecuteMethod() {
+    return Stream.of(
+      Arguments.of("$4\r\nkey1\r\n$6\r\nkey100\r\n", ":1\r\n", List.of("key1"), 1),
+      Arguments.of("$5\r\nkey12\r\n$6\r\nkey100\r\n", ":0\r\n", List.of(), 2),
+      Arguments.of("$4\r\nkey1\r\n$4\r\nkey2\r\n", ":2\r\n", List.of("key1", "key2"), 2),
+      Arguments.of("$4\r\nkey1\r\n$4\r\nkey2\r\n$4\r\nkey3\r\n", ":3\r\n", List.of("key1", "key2", "key3"), 3)
+    );
+  }
   public static Stream<Arguments> testDataForInputReader() {
     return Stream.of(
       Arguments.of(new BufferedReader(new StringReader("$4\r\nkey1\r\n$4\r\nkey2\r\n$4\r\nkey3\r\n")), List.of("key1", "key2", "key3"), 3),
