@@ -48,7 +48,7 @@ class ClientHandler extends Thread {
           new StringLength().execute(store, bufferedReader, output);
           break;
         case MGET_COMMAND: //*2$6STRLEN
-          new MGet().execute(store, bufferedReader, output, numberOfCommands-1);
+          new MGet(numberOfCommands-1).execute(store, bufferedReader, output);
           //output.print("*2\r\n$5\r\nhello\r\n$5\r\nworld\r\n");
           break;
       }

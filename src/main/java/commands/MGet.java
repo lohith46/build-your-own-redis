@@ -12,10 +12,13 @@ public class MGet extends Command<BufferedReader, PrintWriter, List<String>, Lis
 
   private final InputReader inputReader = new InputReader();
   private final ValueFormatterContext context = new ValueFormatterContext();
-  int iterateBufferReaderCount = 0;
+  int iterateBufferReaderCount;
 
-  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int iterateTill) throws IOException {
-    iterateBufferReaderCount = iterateTill;
+  public MGet(int iterateBufferReaderCount) {
+    this.iterateBufferReaderCount = iterateBufferReaderCount;
+  }
+
+  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output) throws IOException {
     List<String> keys = readInput(bufferedReader);
     List<String> values = fetchValues(store, keys);
     printOutput(output, values);
