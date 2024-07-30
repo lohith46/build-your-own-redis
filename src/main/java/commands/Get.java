@@ -6,7 +6,7 @@ import parser.*;
 import java.io.*;
 import java.util.*;
 
-public class Get extends Command<BufferedReader, PrintWriter, String> {
+public class Get extends Command<BufferedReader, PrintWriter, String, String> {
 
   private final InputReader inputReader = new InputReader();
   private final ValueFormatterContext context = new ValueFormatterContext();

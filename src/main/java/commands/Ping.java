@@ -4,7 +4,7 @@ import java.io.*;
 
 import static utils.Constants.*;
 
-public class Ping extends Command<BufferedReader, PrintWriter, String> {
+public class Ping extends Command<BufferedReader, PrintWriter, String, String> {
 
   public void execute(PrintWriter output) {
     printOutput(output, DEFAULT_RESPONSE);

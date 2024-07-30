@@ -7,7 +7,7 @@ import java.util.*;
 
 import static utils.Constants.*;
 
-public class Set extends Command<BufferedReader, PrintWriter, String> {
+public class Set extends Command<BufferedReader, PrintWriter, String, String> {
 
   private final InputReader inputReader = new InputReader();
 

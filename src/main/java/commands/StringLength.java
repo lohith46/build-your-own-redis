@@ -6,7 +6,7 @@ import parser.*;
 import java.io.*;
 import java.util.*;
 
-public class StringLength extends Command<BufferedReader, PrintWriter, String> {
+public class StringLength extends Command<BufferedReader, PrintWriter, String, String> {
 
   public static final Integer DEFAULT_RESPONSE = 0;
   ValueFormatterContext context = new ValueFormatterContext();

@@ -8,7 +8,7 @@ import java.util.*;
 
 import static utils.Constants.*;
 
-public class MGet extends Command<BufferedReader, PrintWriter, List<String>> {
+public class MGet extends Command<BufferedReader, PrintWriter, List<String>, List<String>> {
 
   private final InputReader inputReader = new InputReader();
   private final ValueFormatterContext context = new ValueFormatterContext();
