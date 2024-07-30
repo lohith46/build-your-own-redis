@@ -1,10 +1,8 @@
 package commands;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.*;
-import org.mockito.junit.jupiter.*;
 
 import java.io.*;
 import java.util.*;
@@ -12,7 +10,6 @@ import java.util.stream.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
 class DeleteTest {
 
   private Delete delete;
