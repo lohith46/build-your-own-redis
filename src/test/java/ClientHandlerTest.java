@@ -65,12 +65,12 @@ class ClientHandlerTest {
 
   public static Stream<Arguments> redisCommandsWithExpectedResult() {
     return Stream.of(
-      Arguments.of("PING", SIMPLE_STRING + "PONG"),
-      Arguments.of("GET\r\nfoo\r\n", BULK_STRINGS + "-1"),
-      Arguments.of("SET\r\nfoo\r\nbar\r\n", OK_RESPONSE),
-      Arguments.of("DEL\r\nfoo", SIMPLE_INTEGER + "0"),
-      Arguments.of("STRLEN\r\nfoo", SIMPLE_INTEGER + "0"),
-      Arguments.of("MGET\r\nfoo", ARRAY + "0")
+      Arguments.of(PING_COMMAND + CRLF, SIMPLE_STRING + "PONG"),
+      Arguments.of(GET_COMMAND + CRLF + "foo"+ CRLF, BULK_STRINGS + "-1"),
+      Arguments.of(SET_COMMAND + CRLF+ "foo" + CRLF + "bar "+ CRLF, OK_RESPONSE),
+      Arguments.of("DEL\r\nfoo\r\n", SIMPLE_INTEGER + "0"),
+      Arguments.of("STRLEN\r\nfoo\r\n", SIMPLE_INTEGER + "0"),
+      Arguments.of("MGET\r\nfoo\r\n", ARRAY + "0")
       );
   }
 }
