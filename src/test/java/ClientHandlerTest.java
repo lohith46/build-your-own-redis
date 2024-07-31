@@ -23,8 +23,6 @@ class ClientHandlerTest {
     new Thread(() -> {
       try {
         serverSideSocket = serverSocket.accept();
-        ClientHandler clientHandler = new ClientHandler(serverSideSocket);
-        clientHandler.run();
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -49,6 +47,9 @@ class ClientHandlerTest {
   @ParameterizedTest
   @MethodSource(value = "redisCommandsWithExpectedResult")
   void shouldExecuteTheRedisCommand(String command, String expectedResponse) throws IOException {
+    ClientHandler clientHandler = new ClientHandler(serverSideSocket);
+    clientHandler.start();
+
     PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
     BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
@@ -64,7 +65,12 @@ class ClientHandlerTest {
 
   public static Stream<Arguments> redisCommandsWithExpectedResult() {
     return Stream.of(
-      Arguments.of("PING", SIMPLE_STRING + "PONG")
-    );
+      Arguments.of("PING", SIMPLE_STRING + "PONG"),
+      Arguments.of("GET\r\nfoo\r\n", BULK_STRINGS + "-1"),
+      Arguments.of("SET\r\nfoo\r\nbar\r\n", OK_RESPONSE),
+      Arguments.of("DEL\r\nfoo", SIMPLE_INTEGER + "0"),
+      Arguments.of("STRLEN\r\nfoo", SIMPLE_INTEGER + "0"),
+      Arguments.of("MGET\r\nfoo", ARRAY + "0")
+      );
   }
 }

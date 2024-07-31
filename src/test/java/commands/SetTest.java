@@ -9,9 +9,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static utils.Constants.BULK_STRINGS;
-import static utils.Constants.CRLF;
-import static utils.Constants.OK_RESPONSE;
+import static utils.Constants.*;
 
 class SetTest {
 
@@ -70,7 +68,7 @@ class SetTest {
 
     command.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter);
     printWriter.flush();
-    assertEquals(OK_RESPONSE, stringWriter.toString());
+    assertEquals(OK_RESPONSE+ CRLF, stringWriter.toString());
     assertEquals(store.get(key), value);
   }
 

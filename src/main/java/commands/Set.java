@@ -17,7 +17,7 @@ public class Set extends Command<BufferedReader, PrintWriter, String, String> {
 
     store.put(key, value);
 
-    printOutput(output, OK_RESPONSE);
+    printOutput(output, OK_RESPONSE+CRLF);
   }
 
   @Override
