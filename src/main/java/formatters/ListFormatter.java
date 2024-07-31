@@ -15,7 +15,7 @@ public class ListFormatter implements ValueFormatter {
       .append(CRLF);
 
     for (Object v : valueList) {
-      String stringValue = (v == null) ? NULL_STRING : v.toString();
+      String stringValue = (Objects.isNull(v)) ? NULL_STRING : v.toString();
 
       if (NULL_STRING.equals(stringValue)) {
         stringBuilder.append(BULK_STRINGS)
