@@ -9,7 +9,7 @@ import static utils.Constants.*;
 
 class ClientHandler extends Thread {
   private final Socket socket;
-  private static Map<String, String> store = new HashMap<>();
+  private static final Map<String, String> store = new HashMap<>();
 
   public ClientHandler(Socket socket) {
     this.socket = socket;
