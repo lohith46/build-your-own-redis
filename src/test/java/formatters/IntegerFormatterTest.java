@@ -10,7 +10,7 @@ import static utils.Constants.*;
 
 class IntegerFormatterTest {
 
-  IntegerFormatter formatter = new IntegerFormatter();
+  private final IntegerFormatter formatter = new IntegerFormatter();
 
   public static Stream<Arguments> testData() {
     return Stream.of(
