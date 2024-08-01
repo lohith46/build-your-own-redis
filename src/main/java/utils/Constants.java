@@ -1,11 +1,11 @@
 package utils;
 
 public class Constants {
-  public static String SIMPLE_INTEGER = ":";
-  public static String BULK_STRINGS = "$";
-  public static String SIMPLE_STRING = "+";
-  public static String CRLF = "\r\n";
-  public static String ARRAY = "*";
+  public static final String SIMPLE_INTEGER = ":";
+  public static final String BULK_STRINGS = "$";
+  public static final String SIMPLE_STRING = "+";
+  public static final String CRLF = "\r\n";
+  public static final String ARRAY = "*";
   public static final String PING_COMMAND = "PING";
   public static final String SET_COMMAND = "SET";
   public static final String GET_COMMAND = "GET";
