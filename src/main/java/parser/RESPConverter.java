@@ -1,5 +1,7 @@
 package parser;
 
+import static utils.Constants.ARRAY;
+import static utils.Constants.BULK_STRINGS;
 import static utils.Constants.CRLF;
 
 public class RESPConverter {
@@ -12,12 +14,12 @@ public class RESPConverter {
     StringBuilder respBuilder = new StringBuilder();
 
     // RESP format starts with the array size
-    respBuilder.append("*").append(parts.length).append(CRLF);
+    respBuilder.append(ARRAY).append(parts.length).append(CRLF);
 
     // Process each part
     for (String part : parts) {
       // Add the length of the part
-      respBuilder.append("$").append(part.length()).append(CRLF);
+      respBuilder.append(BULK_STRINGS).append(part.length()).append(CRLF);
       // Add the actual part
       respBuilder.append(part).append(CRLF);
     }
