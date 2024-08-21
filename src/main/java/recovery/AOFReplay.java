@@ -12,9 +12,8 @@ public class AOFReplay {
 
   static Logger logger = LoggerFactory.getLogger(AOFReplay.class);
 
-  public static void replay(String fileName, Map<String, String> store, PrintWriter output) throws IOException {
+  public static void replay(BufferedReader reader, Map<String, String> store, PrintWriter output) throws IOException {
     String command;
-    BufferedReader reader = new BufferedReader(new FileReader(fileName));
     while((command = reader.readLine()) != null) {
       String convertToRESP = RESPConverter.convertToRESP(command);
       StringReader commandString = new StringReader(convertToRESP);
