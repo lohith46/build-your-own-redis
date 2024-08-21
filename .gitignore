@@ -3,4 +3,3 @@ target/
 .DS_Store
 .gitattributes
 .idea/
-appendonly.aof
