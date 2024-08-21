@@ -1,11 +1,11 @@
-package logger;
+package persistence;
 
 import java.io.*;
 
+import static utils.Constants.AOF_FILE;
+
 public class AOFLogger {
-  private static final String AOF_FILE = "appendonly.aof";
   private static BufferedWriter writer;
-  private static boolean isLoading = false;
 
   static {
     try {
@@ -16,9 +16,6 @@ public class AOFLogger {
   }
 
   public static synchronized void log(String command) {
-    if (isLoading) {
-      return; // Do not log if in loading mode
-    }
     try {
       writer.write(command);
       writer.newLine();
@@ -32,9 +29,5 @@ public class AOFLogger {
     if (writer != null) {
       writer.close();
     }
-  }
-
-  public static void setLoading(boolean loading) {
-    isLoading = loading;
   }
 }

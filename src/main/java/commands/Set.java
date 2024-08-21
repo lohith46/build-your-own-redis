@@ -1,6 +1,6 @@
 package commands;
 
-import logger.*;
+import persistence.*;
 import parser.*;
 
 import java.io.*;

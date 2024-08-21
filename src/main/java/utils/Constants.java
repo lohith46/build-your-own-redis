@@ -15,4 +15,5 @@ public class Constants {
   public static final String NULL_STRING = "-1";
   public static final String OK_RESPONSE = "+OK";
   public static final String DEFAULT_RESPONSE = "+PONG\r\n";
+  public static final String AOF_FILE = "appendonly.aof";
 }

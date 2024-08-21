@@ -1,6 +1,8 @@
-package config;
+package recovery;
 
 import commands.*;
+import org.slf4j.*;
+import parser.*;
 
 import java.io.*;
 import java.util.*;
@@ -8,6 +10,8 @@ import java.util.*;
 import static utils.Constants.*;
 
 public class AOFReplayer {
+
+  static Logger logger = LoggerFactory.getLogger(AOFReplayer.class);
 
   public static void replay(String fileName, Map<String, String> store, PrintWriter output) throws IOException {
     String command;
@@ -27,7 +31,7 @@ public class AOFReplayer {
     int count = 0;
     while ((content = bufferedReader.readLine()) != null && count <= numberOfCommands) {
       count++;
-      System.out.println("Command: " +content);
+      logger.info("Command: {}",content);
       numberOfCommands = fetchNumberOfCommands(content, numberOfCommands);
       Command command = commandRegistry.getCommand(content);
       if(command != null) {

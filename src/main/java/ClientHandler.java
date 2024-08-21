@@ -1,4 +1,5 @@
 import commands.*;
+import org.slf4j.*;
 
 import java.io.*;
 import java.net.*;
@@ -7,6 +8,7 @@ import java.util.*;
 import static utils.Constants.*;
 
 class ClientHandler extends Thread {
+  static Logger logger = LoggerFactory.getLogger(ClientHandler.class);
   private final Socket socket;
   private static Map<String, String> store = new HashMap<>();
 
@@ -22,7 +24,7 @@ class ClientHandler extends Thread {
 
       handleClient(bufferedReader, output);
     } catch (IOException ex) {
-      System.out.println("Server exception: " + ex.getMessage());
+      logger.error("Server exception: {}", ex.getMessage());
     }
   }
 
@@ -33,7 +35,7 @@ class ClientHandler extends Thread {
     int count = 0;
     while ((content = bufferedReader.readLine()) != null && count <= numberOfCommands) {
       count++;
-      System.out.println("Command: " +content);
+      logger.info("Command: {}",content);
       numberOfCommands = fetchNumberOfCommands(content, numberOfCommands);
       Command command = commandRegistry.getCommand(content);
       if(command != null) {
