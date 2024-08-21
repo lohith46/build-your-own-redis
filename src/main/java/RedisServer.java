@@ -16,7 +16,7 @@ public class RedisServer {
     try (ServerSocket serverSocket = new ServerSocket(port)) {
       logger.info("Server is listening on port {}", port);
 
-      AOFReplayer.replay(AOF_FILE, store, new PrintWriter(System.out, true));
+      AOFReplay.replay(AOF_FILE, store, new PrintWriter(System.out, true));
 
       while (true) {
         clientSocket = serverSocket.accept();

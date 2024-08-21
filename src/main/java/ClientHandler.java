@@ -1,11 +1,10 @@
 import commands.*;
 import org.slf4j.*;
+import utils.*;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
-
-import static utils.Constants.*;
 
 class ClientHandler extends Thread {
   static Logger logger = LoggerFactory.getLogger(ClientHandler.class);
@@ -36,18 +35,11 @@ class ClientHandler extends Thread {
     while ((content = bufferedReader.readLine()) != null && count <= numberOfCommands) {
       count++;
       logger.info("Command: {}",content);
-      numberOfCommands = fetchNumberOfCommands(content, numberOfCommands);
+      numberOfCommands = CommonUtils.fetchNumberOfCommands(content, numberOfCommands);
       Command command = commandRegistry.getCommand(content);
       if(command != null) {
         command.execute(store, bufferedReader, output, numberOfCommands, true);
       }
     }
-  }
-
-  private static int fetchNumberOfCommands(String content, int numberOfCommands) {
-    if (content.startsWith(ARRAY)) {
-      numberOfCommands = Integer.parseInt(content.substring(1,2));
-    }
-    return numberOfCommands;
   }
 }
