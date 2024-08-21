@@ -7,18 +7,19 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
-public class Delete extends Command<BufferedReader, PrintWriter, List<String>, Integer> {
+public class Delete implements Command {
 
   private final InputReader inputReader = new InputReader();
   private final ValueFormatterContext context = new ValueFormatterContext();
 
-  private final int iterateBufferReaderCount;
-
-  public Delete(int iterateBufferReaderCount) {
+  public void setIterateBufferReaderCount(int iterateBufferReaderCount) {
     this.iterateBufferReaderCount = iterateBufferReaderCount;
   }
 
-  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter printWriter) throws IOException {
+  private int iterateBufferReaderCount;
+
+  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter printWriter, int noOfCommands) throws IOException {
+    iterateBufferReaderCount = noOfCommands;
     List<String> keys = readInput(bufferedReader);
     int count = removeKeys(store, keys);
     printOutput(printWriter, count);
@@ -37,7 +38,6 @@ public class Delete extends Command<BufferedReader, PrintWriter, List<String>, I
     return count.get();
   }
 
-  @Override
   List<String> readInput(BufferedReader bufferedReader) throws IOException {
     return inputReader.readNBufferReader(bufferedReader, getDefaultIterateTill());
   }
@@ -46,7 +46,6 @@ public class Delete extends Command<BufferedReader, PrintWriter, List<String>, I
     return iterateBufferReaderCount;
   }
 
-  @Override
   void printOutput(PrintWriter output, Integer count) {
     String response = context.formatValue(count);
     output.print(response);

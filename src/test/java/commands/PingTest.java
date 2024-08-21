@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static utils.Constants.DEFAULT_RESPONSE;
+import static utils.Constants.SIMPLE_STRING;
 
 class PingTest {
   private Ping command = new Ping();
@@ -61,14 +61,14 @@ class PingTest {
   }
 
   @Test
-  void shouldBeAbleToExecuteThePingCommand() {
+  void shouldBeAbleToExecuteThePingCommand() throws IOException {
     command = new Ping();
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
 
-    command.execute(printWriter);
+    command.execute(store, new BufferedReader(new StringReader("")), printWriter, 1);
     printWriter.flush();
 
-    assertEquals(DEFAULT_RESPONSE, stringWriter.toString());
+    assertEquals(SIMPLE_STRING + "PONG\r\n", stringWriter.toString());
   }
 }

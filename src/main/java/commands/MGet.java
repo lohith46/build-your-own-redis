@@ -8,17 +8,19 @@ import java.util.*;
 
 import static utils.Constants.*;
 
-public class MGet extends Command<BufferedReader, PrintWriter, List<String>, List<String>> {
+public class MGet implements Command {
 
   private final InputReader inputReader = new InputReader();
   private final ValueFormatterContext context = new ValueFormatterContext();
-  int iterateBufferReaderCount;
 
-  public MGet(int iterateBufferReaderCount) {
+  public void setIterateBufferReaderCount(int iterateBufferReaderCount) {
     this.iterateBufferReaderCount = iterateBufferReaderCount;
   }
 
-  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output) throws IOException {
+  int iterateBufferReaderCount;
+
+  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands) throws IOException {
+    iterateBufferReaderCount = noOfCommands;
     List<String> keys = readInput(bufferedReader);
     List<String> values = fetchValues(store, keys);
     printOutput(output, values);
@@ -33,7 +35,6 @@ public class MGet extends Command<BufferedReader, PrintWriter, List<String>, Lis
     return values;
   }
 
-  @Override
   List<String> readInput(BufferedReader bufferedReader) throws IOException {
     return inputReader.readNBufferReader(bufferedReader, getDefaultIterateTill());
   }
@@ -42,7 +43,6 @@ public class MGet extends Command<BufferedReader, PrintWriter, List<String>, Lis
     return iterateBufferReaderCount;
   }
 
-  @Override
   void printOutput(PrintWriter output, List<String> values) {
     String response = context.formatValue(values);
     output.print(response);

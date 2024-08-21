@@ -4,6 +4,7 @@ import org.junit.jupiter.params.provider.*;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 import java.util.stream.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +15,7 @@ class ClientHandlerTest {
   private ServerSocket serverSocket;
   private Socket clientSocket;
   private Socket serverSideSocket;
+  private Map<String, String> store = new HashMap<>();
 
   @BeforeEach
   void setUp() throws IOException {
@@ -47,7 +49,7 @@ class ClientHandlerTest {
   @ParameterizedTest
   @MethodSource(value = "redisCommandsWithExpectedResult")
   void shouldExecuteTheRedisCommand(String command, String expectedResponse) throws IOException {
-    ClientHandler clientHandler = new ClientHandler(serverSideSocket);
+    ClientHandler clientHandler = new ClientHandler(serverSideSocket, store);
     clientHandler.start();
 
     PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);

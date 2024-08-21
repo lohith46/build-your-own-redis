@@ -17,14 +17,15 @@ class MGetTest {
 
   @BeforeEach
   void setUp() {
-    mGet = new MGet(1);
+    mGet = new MGet();
     store = new HashMap<>(Map.of("key1", "value1", "key2", "value2", "key3", "value3"));
   }
 
   @ParameterizedTest
   @MethodSource(value = "testDataForInputReader")
   void shouldBeAbleToReadInputAndReturnKeysValues(BufferedReader bufferedReader, List<String> expectedList, int noOfKeys) throws IOException {
-    mGet = new MGet(noOfKeys);
+    mGet = new MGet();
+    mGet.setIterateBufferReaderCount(noOfKeys);
 
     List<String> stringList = mGet.readInput(bufferedReader);
 
@@ -64,11 +65,11 @@ class MGetTest {
   @ParameterizedTest
   @MethodSource(value = "testDataForExecuteMethod")
   void shouldBeAbleToExecuteTheMgetCommand(String inputBufferStr, String expectedOutput, int noOfKeys) throws IOException {
-    mGet  = new MGet(noOfKeys);
+    mGet  = new MGet();
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
 
-    mGet.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter);
+    mGet.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter, noOfKeys);
     printWriter.flush();
 
     assertEquals(expectedOutput, stringWriter.toString());

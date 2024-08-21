@@ -1,21 +1,21 @@
 package commands;
 
 import java.io.*;
+import java.util.*;
 
-import static utils.Constants.*;
+import static utils.Constants.DEFAULT_RESPONSE;
 
-public class Ping extends Command<BufferedReader, PrintWriter, String, String> {
+public class Ping implements Command {
 
-  public void execute(PrintWriter output) {
+  @Override
+  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands) throws IOException {
     printOutput(output, DEFAULT_RESPONSE);
   }
 
-  @Override
   String readInput(BufferedReader bufferedReader) {
     return null;
   }
 
-  @Override
   void printOutput(PrintWriter output, String value) {
     output.print(value);
     output.flush();

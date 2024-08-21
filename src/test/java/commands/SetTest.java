@@ -66,7 +66,7 @@ class SetTest {
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
 
-    command.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter);
+    command.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter, 1);
     printWriter.flush();
     assertEquals(OK_RESPONSE+ CRLF, stringWriter.toString());
     assertEquals(store.get(key), value);

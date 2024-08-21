@@ -1,4 +1,3 @@
-import commands.Set;
 import commands.*;
 
 import java.io.*;
@@ -9,10 +8,11 @@ import static utils.Constants.*;
 
 class ClientHandler extends Thread {
   private final Socket socket;
-  private static final Map<String, String> store = new HashMap<>();
+  private static Map<String, String> store = new HashMap<>();
 
-  public ClientHandler(Socket socket) {
+  public ClientHandler(Socket socket, Map<String, String> store) {
     this.socket = socket;
+    this.store = store;
   }
 
   public void run() {
@@ -28,31 +28,16 @@ class ClientHandler extends Thread {
 
   private static void handleClient(BufferedReader bufferedReader, PrintWriter output) throws IOException {
     String content;
+    CommandRegistry commandRegistry = new CommandRegistry();
     int numberOfCommands = 0;
     int count = 0;
     while ((content = bufferedReader.readLine()) != null && count <= numberOfCommands) {
       count++;
       System.out.println("Command: " +content);
       numberOfCommands = fetchNumberOfCommands(content, numberOfCommands);
-      switch (content.toUpperCase()) {
-        case PING_COMMAND:
-          new Ping().execute(output);
-          break;
-        case SET_COMMAND:
-          new Set().execute(store, bufferedReader, output);
-          break;
-        case GET_COMMAND:
-          new Get().execute(store, bufferedReader, output);
-          break;
-        case STRING_LENGTH_COMMAND:
-          new StringLength().execute(store, bufferedReader, output);
-          break;
-        case MGET_COMMAND:
-          new MGet(numberOfCommands-1).execute(store, bufferedReader, output);
-          break;
-        case DEL_COMMAND:
-          new Delete(numberOfCommands-1).execute(store, bufferedReader, output);
-          break;
+      Command command = commandRegistry.getCommand(content);
+      if(command != null) {
+        command.execute(store, bufferedReader, output, numberOfCommands);
       }
     }
   }

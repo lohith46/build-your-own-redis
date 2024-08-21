@@ -17,14 +17,15 @@ class DeleteTest {
 
   @BeforeEach
   void setUp() {
-    delete = new Delete(1);
+    delete = new Delete();
     store = new HashMap<>(Map.of("key1", "value1", "key2", "value2", "key3", "value3"));
   }
 
   @ParameterizedTest
   @MethodSource(value = "testDataForInputReader")
   void shouldBeAbleToReadInputAndReturnListOfKeysToDelete(BufferedReader bufferedReader, List<String> expectedList, int noOfKeys) throws IOException {
-    delete  = new Delete(noOfKeys);
+    delete  = new Delete();
+    delete.setIterateBufferReaderCount(noOfKeys);
 
     List<String> stringList = delete.readInput(bufferedReader);
 
@@ -59,11 +60,11 @@ class DeleteTest {
   @MethodSource(value = "testDataForExecuteMethod")
   void shouldBeAbleToExecuteTheDeleteByRemovingKeysFromStore(String inputBufferStr, String expectedOutput,
                                                              List<String> removedKeys, int noOfKeys) throws IOException {
-    delete  = new Delete(noOfKeys);
+    delete  = new Delete();
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
 
-    delete.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter);
+    delete.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter, noOfKeys);
     printWriter.flush();
 
     Map<String, String> updatedStore = store;

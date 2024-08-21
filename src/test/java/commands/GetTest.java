@@ -65,7 +65,7 @@ class GetTest {
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
 
-    command.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter);
+    command.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter, 1);
     printWriter.flush();
 
     assertEquals(expectedOutput, stringWriter.toString());
