@@ -1,3 +1,5 @@
+import config.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -10,8 +12,7 @@ public class Main {
     try (ServerSocket serverSocket = new ServerSocket(port)) {
       System.out.println("Server is listening on port " + port);
 
-
-     // AOFReplayer.replayAOF("appendonly.aof", store, new PrintWriter(System.out, true));
+      AOFReplayer.replay("appendonly.aof", store, new PrintWriter(System.out, true));
 
       while (true) {
         clientSocket = serverSocket.accept();

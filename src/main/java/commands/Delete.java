@@ -18,7 +18,7 @@ public class Delete implements Command {
 
   private int iterateBufferReaderCount;
 
-  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter printWriter, int noOfCommands) throws IOException {
+  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter printWriter, int noOfCommands, boolean updateLogFile) throws IOException {
     iterateBufferReaderCount = noOfCommands;
     List<String> keys = readInput(bufferedReader);
     int count = removeKeys(store, keys);

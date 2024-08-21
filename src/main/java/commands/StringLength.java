@@ -12,7 +12,7 @@ public class StringLength implements Command {
   ValueFormatterContext context = new ValueFormatterContext();
   private final InputReader inputReader = new InputReader();
 
-  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands) throws IOException {
+  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands, boolean updateLogFile) throws IOException {
     String input = readInput(bufferedReader);
     String storedValue = store.get(input);
     printOutput(output, storedValue);

@@ -19,7 +19,7 @@ public class MGet implements Command {
 
   int iterateBufferReaderCount;
 
-  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands) throws IOException {
+  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands, boolean updateLogFile) throws IOException {
     iterateBufferReaderCount = noOfCommands;
     List<String> keys = readInput(bufferedReader);
     List<String> values = fetchValues(store, keys);

@@ -64,7 +64,7 @@ class DeleteTest {
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
 
-    delete.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter, noOfKeys);
+    delete.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter, noOfKeys, false);
     printWriter.flush();
 
     Map<String, String> updatedStore = store;

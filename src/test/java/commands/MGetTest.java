@@ -69,7 +69,7 @@ class MGetTest {
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
 
-    mGet.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter, noOfKeys);
+    mGet.execute(store, new BufferedReader(new StringReader(inputBufferStr)), printWriter, noOfKeys, false);
     printWriter.flush();
 
     assertEquals(expectedOutput, stringWriter.toString());

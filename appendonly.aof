@@ -1,0 +1,6 @@
+SET aof working
+SET foo bar
+SET username lohith
+SET backend java
+SET frontend react
+SET bar  null

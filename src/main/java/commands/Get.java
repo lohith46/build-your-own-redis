@@ -11,7 +11,7 @@ public class Get implements Command {
   private final InputReader inputReader = new InputReader();
   private final ValueFormatterContext context = new ValueFormatterContext();
 
-  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands) throws IOException {
+  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands, boolean updateLogFile) throws IOException {
     String key = readInput(bufferedReader);
     String value = store.get(key);
     printOutput(output, value);

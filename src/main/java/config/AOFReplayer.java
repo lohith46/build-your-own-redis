@@ -5,33 +5,43 @@ import commands.*;
 import java.io.*;
 import java.util.*;
 
+import static utils.Constants.*;
+
 public class AOFReplayer {
-  public static void replayAOF(String aofFileName, Map<String, String> store, PrintWriter output) throws IOException {
+
+  public static void replay(String fileName, Map<String, String> store, PrintWriter output) throws IOException {
+    String command;
+    BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    while((command = reader.readLine()) != null) {
+      String convertToRESP = RESPConverter.convertToRESP(command);
+      StringReader commandString = new StringReader(convertToRESP);
+      BufferedReader bufferedReader = new BufferedReader(commandString);
+      executeCommand(store, output, bufferedReader);
+    }
+  }
+
+  private static void executeCommand(Map<String, String> store, PrintWriter output, BufferedReader bufferedReader) throws IOException {
+    String content;
     CommandRegistry commandRegistry = new CommandRegistry();
-    BufferedReader bufferedReader = new BufferedReader(new FileReader(aofFileName));
-    String input = bufferedReader.readLine();
-    System.out.println(input);
-    String convertToRESP = RESPConverter.convertToRESP(input);
-    StringReader commandString = new StringReader(convertToRESP);
-    BufferedReader commandReader = new BufferedReader(commandString);
-    List<String> commandParts;
-    while ((commandParts = RESPParser.parseRESP(commandReader)) != null) {
-      String commandName = commandParts.get(0).toUpperCase();
-      Command command = commandRegistry.getCommand(commandName);
-
-      if (command != null) {
-        // Create a BufferedReader for the parsed command parts
-        StringReader commandString1 = new StringReader(String.join(" ", commandParts));
-        BufferedReader commandReader1 = new BufferedReader(commandString1);
-
-        // Execute the command, passing the aofLogger to log to AOF if necessary
-        command.execute(store, commandReader1, output, commandParts.size());
-      } else {
-        output.println("Unknown command: " + commandName);
+    int numberOfCommands = 0;
+    int count = 0;
+    while ((content = bufferedReader.readLine()) != null && count <= numberOfCommands) {
+      count++;
+      System.out.println("Command: " +content);
+      numberOfCommands = fetchNumberOfCommands(content, numberOfCommands);
+      Command command = commandRegistry.getCommand(content);
+      if(command != null) {
+        command.execute(store, bufferedReader, output, numberOfCommands, false);
       }
     }
+  }
 
-    bufferedReader.close();
+
+  private static int fetchNumberOfCommands(String content, int numberOfCommands) {
+    if (content.startsWith(ARRAY)) {
+      numberOfCommands = Integer.parseInt(content.substring(1,2));
+    }
+    return numberOfCommands;
   }
 }
 

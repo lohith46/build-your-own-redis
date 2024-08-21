@@ -12,15 +12,17 @@ public class Set implements Command{
 
   private final InputReader inputReader = new InputReader();
 
-  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands) throws IOException {
+  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands, boolean updateLogFile) throws IOException {
     String key = readInput(bufferedReader);
     String value = readInput(bufferedReader);
 
     store.put(key, value);
 
     // Log the SET command to the AOF file
-    String commandLog = String.format("SET %s %s", key, value);
-    AOFLogger.log(commandLog);
+    if(updateLogFile) {
+      String commandLog = String.format("SET %s %s", key, value);
+      AOFLogger.log(commandLog);
+    }
 
     printOutput(output, OK_RESPONSE+CRLF);
   }

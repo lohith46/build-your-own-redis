@@ -37,7 +37,7 @@ class ClientHandler extends Thread {
       numberOfCommands = fetchNumberOfCommands(content, numberOfCommands);
       Command command = commandRegistry.getCommand(content);
       if(command != null) {
-        command.execute(store, bufferedReader, output, numberOfCommands);
+        command.execute(store, bufferedReader, output, numberOfCommands, true);
       }
     }
   }

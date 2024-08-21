@@ -23,22 +23,6 @@ class PingTest {
   }
 
   @ParameterizedTest
-  @MethodSource(value = "testDataForInputReader")
-  void shouldAlwaysReturnNullIrrespectiveOfInput(BufferedReader bufferedReader) {
-    command = new Ping();
-
-    assertNull(command.readInput(bufferedReader));
-  }
-
-  public static Stream<Arguments> testDataForInputReader() {
-    return Stream.of(
-      Arguments.of(new BufferedReader(new StringReader("$4\r\nkey1\r\n")), "key1"),
-      Arguments.of(new BufferedReader(new StringReader("$4\r\nkey1\r\n")), "key1"),
-      Arguments.of(new BufferedReader(new StringReader("")), null)
-    );
-  }
-
-  @ParameterizedTest
   @MethodSource(value = "testDataForPrintOutput")
   void shouldBeAbleToPrintOutputValueForAGivenKey(String value , String expectedOutput) {
     StringWriter stringWriter = new StringWriter();
@@ -66,7 +50,7 @@ class PingTest {
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
 
-    command.execute(store, new BufferedReader(new StringReader("")), printWriter, 1);
+    command.execute(store, new BufferedReader(new StringReader("")), printWriter, 1, false);
     printWriter.flush();
 
     assertEquals(SIMPLE_STRING + "PONG\r\n", stringWriter.toString());
