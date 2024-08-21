@@ -7,9 +7,9 @@ import java.util.*;
 
 import static utils.Constants.*;
 
-public class Main {
+public class RedisServer {
   public static void main(String[] args) {
-    Logger logger = LoggerFactory.getLogger(Main.class);
+    Logger logger = LoggerFactory.getLogger(RedisServer.class);
     Socket clientSocket = null;
     Map<String, String> store = new HashMap<>();
     int port = 6379;
