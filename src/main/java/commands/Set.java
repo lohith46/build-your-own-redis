@@ -19,7 +19,7 @@ public class Set implements Command{
     store.put(key, value);
 
     // Log the SET command to the AOF file
-    String commandLog = String.format("SET %s %s %s %s", key.length(), key, value.length(), value);
+    String commandLog = String.format("SET %s %s", key, value);
     AOFLogger.log(commandLog);
 
     printOutput(output, OK_RESPONSE+CRLF);
