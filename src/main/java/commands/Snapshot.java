@@ -1,34 +1,30 @@
 package commands;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.*;
 
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.locks.*;
 
-import static utils.Constants.CRLF;
-import static utils.Constants.OK_RESPONSE;
-import static utils.Constants.SNAPSHOT_FILE;
+import static utils.CommonUtils.generateDynamicFileName;
+import static utils.Constants.*;
 
-public class Snapshot implements Command{
-
-  Logger logger = LoggerFactory.getLogger(Snapshot.class);
+@Slf4j
+public class Snapshot {
   private final Lock lock = new ReentrantLock();
 
-  @Override
-  public void execute(Map<String, String> store, BufferedReader bufferedReader, PrintWriter output, int noOfCommands, boolean updateLogFile) throws IOException {
+  public void execute(Map<String, String> store) throws IOException {
+    String fileName = generateDynamicFileName(SNAPSHOT_PREFIX, SNAPSHOT_RDB_FORMAT);
     lock.lock();  // Lock the database to prevent writes
-    try (FileOutputStream fos = new FileOutputStream(SNAPSHOT_FILE, true);
+    try (FileOutputStream fos = new FileOutputStream(fileName, true);
          ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 
       oos.writeObject(store);  // Serialize the in-memory database to file
       oos.flush();  // Ensure all data is written
 
-      logger.info("Database saved successfully.");
-      output.print(OK_RESPONSE+CRLF);
-      output.flush();
+      log.info("Database saved successfully.");
     } catch (IOException e) {
-      logger.error("Error saving database: {}", e.getMessage());
+      log.error("Error saving database: {}", e.getMessage());
     } finally {
       lock.unlock();  // Unlock the database
     }

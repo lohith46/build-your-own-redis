@@ -17,5 +17,7 @@ public class Constants {
   public static final String OK_RESPONSE = "+OK";
   public static final String DEFAULT_RESPONSE = "+PONG\r\n";
   public static final String AOF_FILE = "appendonly.aof";
-  public static final String SNAPSHOT_FILE = "snapshot.rdb";
+  public static final String SNAPSHOT_PREFIX = "snapshot";
+  public static final String SNAPSHOT_RDB_FORMAT = ".rdb";
+  public static final int SNAPSHOT_SCHEDULER_IN_HOURS = 1;
 }

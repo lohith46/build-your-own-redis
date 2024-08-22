@@ -1,6 +1,7 @@
 package recovery;
 
 import commands.*;
+import lombok.extern.slf4j.*;
 import org.slf4j.*;
 import parser.*;
 import utils.*;
@@ -8,9 +9,8 @@ import utils.*;
 import java.io.*;
 import java.util.*;
 
+@Slf4j
 public class AOFReplay {
-
-  static Logger logger = LoggerFactory.getLogger(AOFReplay.class);
 
   public static void replay(BufferedReader reader, Map<String, String> store, PrintWriter output) throws IOException {
     String command;
@@ -29,7 +29,7 @@ public class AOFReplay {
     int count = 0;
     while ((content = bufferedReader.readLine()) != null && count <= numberOfCommands) {
       count++;
-      logger.info("Command: {}",content);
+      log.info("Command: {}",content);
       numberOfCommands = CommonUtils.fetchNumberOfCommands(content, numberOfCommands);
       Command command = commandRegistry.getCommand(content);
       if(command != null) {

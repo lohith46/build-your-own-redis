@@ -2,13 +2,7 @@ package commands;
 
 import java.util.*;
 
-import static utils.Constants.DEL_COMMAND;
-import static utils.Constants.GET_COMMAND;
-import static utils.Constants.MGET_COMMAND;
-import static utils.Constants.PING_COMMAND;
-import static utils.Constants.SAVE_COMMAND;
-import static utils.Constants.SET_COMMAND;
-import static utils.Constants.STRING_LENGTH_COMMAND;
+import static utils.Constants.*;
 
 public class CommandRegistry {
 
@@ -21,7 +15,6 @@ public class CommandRegistry {
     commandMap.put(STRING_LENGTH_COMMAND, new StringLength());
     commandMap.put(MGET_COMMAND, new MGet());
     commandMap.put(DEL_COMMAND, new Delete());
-    commandMap.put(SAVE_COMMAND, new Snapshot());
   }
 
   public Command getCommand(String commandName) {

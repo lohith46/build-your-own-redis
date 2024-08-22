@@ -1,4 +1,5 @@
 import commands.*;
+import lombok.extern.slf4j.*;
 import org.slf4j.*;
 import utils.*;
 
@@ -6,8 +7,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+@Slf4j
 class ClientHandler extends Thread {
-  static Logger logger = LoggerFactory.getLogger(ClientHandler.class);
   private final Socket socket;
   private static Map<String, String> store = new HashMap<>();
 
@@ -23,7 +24,7 @@ class ClientHandler extends Thread {
 
       handleClient(bufferedReader, output);
     } catch (IOException ex) {
-      logger.error("Server exception: {}", ex.getMessage());
+      log.error("Server exception: {}", ex.getMessage());
     }
   }
 
@@ -34,7 +35,7 @@ class ClientHandler extends Thread {
     int count = 0;
     while ((content = bufferedReader.readLine()) != null && count <= numberOfCommands) {
       count++;
-      logger.info("Command: {}",content);
+      log.info("Command: {}",content);
       numberOfCommands = CommonUtils.fetchNumberOfCommands(content, numberOfCommands);
       Command command = commandRegistry.getCommand(content);
       if(command != null) {

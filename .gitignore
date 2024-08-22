@@ -4,4 +4,6 @@ target/
 .gitattributes
 .idea/
 appendonly.aof
- snapshot.rdb
+snapshot_*
+logs/
+logs/*
