@@ -7,3 +7,4 @@ appendonly.aof
 snapshot_*
 logs/
 logs/*
+snapshots/*
